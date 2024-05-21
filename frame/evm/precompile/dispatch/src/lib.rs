@@ -46,7 +46,7 @@ use pallet_evm::{AddressMapping, GasWeightMapping};
 // `DecodeLimit` specifies the max depth a call can use when decoding, as unbounded depth
 // can be used to overflow the stack.
 // Default value is 8, which is the same as in XCM call decoding.
-pub struct Dispatch<T, DispatchValidator = (), DecodeLimit = ConstU32<8>> {
+pub struct Dispatch<T, DispatchValidator = (), DecodeLimit = ConstU32<512>> {
 	_marker: PhantomData<(T, DispatchValidator, DecodeLimit)>,
 }
 
@@ -65,7 +65,7 @@ where
 
 		let call = T::RuntimeCall::decode_with_depth_limit(DecodeLimit::get(), &mut &*input)
 			.map_err(|_| PrecompileFailure::Error {
-				exit_status: ExitError::Other("decode failed".into()),
+				exit_status: ExitError::Other("1 decode failed".into()),
 			})?;
 		let info = call.get_dispatch_info();
 
@@ -119,7 +119,7 @@ where
 			}
 			Err(e) => Err(PrecompileFailure::Error {
 				exit_status: ExitError::Other(
-					format!("dispatch execution failed: {}", <&'static str>::from(e)).into(),
+					format!("2 dispatch execution failed: {}", <&'static str>::from(e)).into(),
 				),
 			}),
 		}
