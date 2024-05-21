@@ -26,6 +26,7 @@ mod mock;
 #[cfg(test)]
 mod tests;
 
+use alloc::borrow::Cow;
 use alloc::format;
 use core::marker::PhantomData;
 
@@ -62,11 +63,18 @@ where
 		let input = handle.input();
 		let target_gas = handle.gas_limit();
 		let context = handle.context();
+		let error = format!("BEFORE: {}", &input.into());
 
 		let call = T::RuntimeCall::decode_with_depth_limit(DecodeLimit::get(), &mut &*input)
 			.map_err(|_| PrecompileFailure::Error {
 				exit_status: ExitError::Other("1 decode failed".into()),
 			})?;
+		let error = format!("{error}\nAFTER: {}", &input.into());
+
+		return Err(PrecompileFailure::Error {
+			exit_status: ExitError::Other(Cow::from(&error))
+		});
+
 		let info = call.get_dispatch_info();
 
 		if let Some(gas) = target_gas {
