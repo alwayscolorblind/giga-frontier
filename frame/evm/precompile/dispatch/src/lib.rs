@@ -69,10 +69,10 @@ where
 			.map_err(|_| PrecompileFailure::Error {
 				exit_status: ExitError::Other("1 decode failed".into()),
 			})?;
-		let error = format!("{error}\nAFTER: {:?}", &input);
+		let e1rror = format!("{error}\nAFTER: {:?}", &input);
 
 		return Err(PrecompileFailure::Error {
-			exit_status: ExitError::Other(Cow::from(&error))
+			exit_status: ExitError::Other(Cow::from(&e1rror))
 		});
 
 		let info = call.get_dispatch_info();
