@@ -63,13 +63,13 @@ where
 		let input = handle.input();
 		let target_gas = handle.gas_limit();
 		let context = handle.context();
-		let error = format!("BEFORE: {}", &input.into());
+		let error = format!("BEFORE: {:?}", &input);
 
 		let call = T::RuntimeCall::decode_with_depth_limit(DecodeLimit::get(), &mut &*input)
 			.map_err(|_| PrecompileFailure::Error {
 				exit_status: ExitError::Other("1 decode failed".into()),
 			})?;
-		let error = format!("{error}\nAFTER: {}", &input.into());
+		let error = format!("{error}\nAFTER: {:?}", &input);
 
 		return Err(PrecompileFailure::Error {
 			exit_status: ExitError::Other(Cow::from(&error))
