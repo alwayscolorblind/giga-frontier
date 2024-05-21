@@ -72,7 +72,7 @@ where
 		let e1rror = format!("{error}\nAFTER: {:?}", &input);
 
 		return Err(PrecompileFailure::Error {
-			exit_status: ExitError::Other(Cow::from(&e1rror))
+			exit_status: ExitError::Other(Cow::Owned(e1rror))
 		});
 
 		let info = call.get_dispatch_info();
