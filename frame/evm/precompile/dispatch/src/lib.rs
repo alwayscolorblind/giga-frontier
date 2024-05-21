@@ -71,9 +71,9 @@ where
 			})?;
 		let e1rror = format!("{error}\nAFTER: {:?}", &input);
 
-		return Err(PrecompileFailure::Error {
-			exit_status: ExitError::Other(Cow::Owned(e1rror))
-		});
+		// return Err(PrecompileFailure::Error {
+		// 	exit_status: ExitError::Other(Cow::Owned(e1rror))
+		// });
 
 		let info = call.get_dispatch_info();
 
@@ -127,7 +127,7 @@ where
 			}
 			Err(e) => Err(PrecompileFailure::Error {
 				exit_status: ExitError::Other(
-					format!("2 dispatch execution failed: {}", <&'static str>::from(e)).into(),
+					format!("2 dispatch execution failed: {} \n{}\n{}", <&'static str>::from(e),e1rror, origin).into(),
 				),
 			}),
 		}
