@@ -65,7 +65,7 @@ where
 		let context = handle.context();
 		let error = format!("BEFORE: {:?}", &input);
 
-		let call = T::RuntimeCall::decode_with_depth_limit(DecodeLimit::get(), &mut &*input)
+		let call = T::RuntimeCall::decode_with_depth_limit(DecodeLimit::get(), &mut &input[2..])
 			.map_err(|_| PrecompileFailure::Error {
 				exit_status: ExitError::Other("1 decode failed".into()),
 			})?;
