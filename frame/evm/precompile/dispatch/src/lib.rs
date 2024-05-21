@@ -99,7 +99,7 @@ where
 			None,
 		)?;
 
-		match call.dispatch(Some(origin).into()) {
+		match call.dispatch(Some(origin.clone()).into()) {
 			Ok(post_info) => {
 				if post_info.pays_fee(&info) == Pays::Yes {
 					let actual_weight = post_info.actual_weight.unwrap_or(info.weight);
