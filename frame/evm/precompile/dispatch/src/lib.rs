@@ -99,7 +99,7 @@ where
 			None,
 		)?;
 
-		match call.dispatch(Some(origin.clone()).into()) {
+		match call.clone().dispatch(Some(origin.clone()).into()) {
 			Ok(post_info) => {
 				if post_info.pays_fee(&info) == Pays::Yes {
 					let actual_weight = post_info.actual_weight.unwrap_or(info.weight);
@@ -127,7 +127,7 @@ where
 			}
 			Err(e) => Err(PrecompileFailure::Error {
 				exit_status: ExitError::Other(
-					format!("2 dispatch execution failed: {} \n{}\n{}", <&'static str>::from(e),e1rror, origin).into(),
+					format!("2 dispatch execution failed: {} \n{}\norigin:{:?}\ncall:{:?}", <&'static str>::from(e),e1rror, origin, call).into(),
 				),
 			}),
 		}
